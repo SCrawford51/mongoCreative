@@ -15,6 +15,7 @@ router.get('/taskList', function(req, res, next) {
     res.send(taskList);
 });
 
+/*Add to the taskList array*/
 router.post('/taskList', function(req, res, next) {
     console.log("In task post");
     console.log(req.body);
