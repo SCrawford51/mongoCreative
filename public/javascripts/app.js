@@ -17,7 +17,7 @@ function taskFetcher($http) {
     }
 }
 
-function mainCtrl($scope, taskFetcher, $http) {
+function mainCtrl($scope, taskFetcher, $http, $filter, filterFilter) {
 
     $scope.taskList = [];
 
@@ -28,7 +28,7 @@ function mainCtrl($scope, taskFetcher, $http) {
         })
 
     $scope.addTask = function () {
-        var formData = { task: $scope.Task };
+        var formData = { task: $scope.Task, selected: 'false' };
         console.log(formData);
         var taskUrl = 'taskList';
         $http({
@@ -40,5 +40,12 @@ function mainCtrl($scope, taskFetcher, $http) {
         }).error(function (data, status, headers, config) {
             console.log("Post Failed");
         });
+        location.reload();
     }
-}
+
+    $scope.removeTask = function () {
+        $scope.taskList = filterFilter($scope.taskList, function (task) {
+            return !task.selected;
+        });
+    };
+};

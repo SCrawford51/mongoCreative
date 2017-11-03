@@ -16,15 +16,16 @@
         
         <h1>Enter a New Task</h1>
         <form id="newTask" ng-submit="addTask()">
-            <input type="text" ng-model"Task" value="">
+            <input type="text" ng-model="Task" value="">
             <input type="submit" value="Submit">
         </form>
 
-        <ol>
+        <ul>
             <li ng-repeat='list in taskList' class="items">
-                {{list.task}}
+                <input type="checkbox" ng-model="list.check">{{list.task}}
             </li>
-        </ol>
+        </ul>
+        <button ng-click="removeTask()">Delete</button>
 
     </div>
 </body>

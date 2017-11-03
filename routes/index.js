@@ -2,9 +2,7 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 
-var taskList = [
-    {task: 'test data'}
-];
+var taskList = [];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
