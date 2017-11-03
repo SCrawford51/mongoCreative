@@ -27,12 +27,8 @@ function mainCtrl($scope, taskFetcher, $http) {
             $scope.taskList = data;
         })
 
-    $scope.reload = function() {
-        location.reload();
-    }
-
     $scope.addTask = function () {
-        var formData = $scope.Task;
+        var formData = { task: $scope.Task };
         console.log(formData);
         var taskUrl = 'taskList';
         $http({
