@@ -1,36 +1,42 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-
-var taskList = [];
-
 var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
+var Task = mongoose.model('Task');
 
-mongoose.connect('mongodb://localhost/taskDB', { useMongoClient: true }); //Connects to a mongo database called "commentDB"
-
-var taskSchema = mongoose.Schema({ //Defines the Schema for this database
-Name: String
+router.get('/taskList', function (req, res, next) {
+    Task.find(function (err, taskList) {
+        if (err) { return next(err); }
+        res.json(taskList);
+    });
 });
 
-var Task = mongoose.model('task', taskSchema); 
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.sendFile('index.html', { root: 'public' });
+router.post('/taskList', function (req, res, next) {
+    var task = new Task(req.body);
+    task.save(function (err, task) {
+        if (err) { return next(err); }
+        res.json(task);
+    });
 });
 
-/*Display the task list*/
-router.get('/taskList', function(req, res, next) {
-    console.log("In task list");
-    res.send(taskList);
+router.param('taskList', function (req, res, next, id) {
+    var query = Task.findById(id);
+    query.exec(function (err, task) {
+        if (err) { return next(err); }
+        if (!task) { return next(new Error("can't find task")); }
+        req.task = task;
+        return next();
+    });
 });
 
-/*Add to the taskList array*/
-router.post('/taskList', function(req, res, next) {
-    console.log("In task post");
-    console.log(req.body);
-    taskList.push(req.body);
-    res.end('{success" : "Updates Successfully", "status" : 200');
+router.get('/taskList/:task', function (req, res) {
+    res.json(req.task);
+});
+
+router.delete('/taskList/:task', function (req, res) {
+    console.log("In Delete");
+    req.comment.remove();
+    res.sendStatus(200);
 });
 
 module.exports = router;

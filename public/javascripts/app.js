@@ -11,6 +11,7 @@ function mainCtrl($scope, $http, $filter) {
             angular.copy(data, $scope.comments);
         });
     };
+    $scope.getAll();
 
     $scope.create = function (task) {
         return $http.post('/taskList', comment).success(function (data) {
@@ -19,7 +20,8 @@ function mainCtrl($scope, $http, $filter) {
     };
 
     $scope.addTask = function () {
-        if($scope.Task === '') { resturn; }
+        if ($scope.Task === '') { resturn; }
+        console.log("In addTask with " + $scope.Task);
         $scope.create({
             task: $scope.Task,
             priority: $scope.Priority,
