@@ -4,6 +4,16 @@ var request = require('request');
 
 var taskList = [];
 
+var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
+
+mongoose.connect('mongodb://localhost/taskDB', { useMongoClient: true }); //Connects to a mongo database called "commentDB"
+
+var taskSchema = mongoose.Schema({ //Defines the Schema for this database
+Name: String
+});
+
+var Task = mongoose.model('task', taskSchema); 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.sendFile('index.html', { root: 'public' });
