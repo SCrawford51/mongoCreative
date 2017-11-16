@@ -17,6 +17,13 @@
 
         <form id="newTask" ng-submit="addTask()">
             <input type="text" ng-model="Task" value="">
+            <select>
+                <option value="Very High">Very High</option>
+                <option value="High">High</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Low">Low</option>
+                <option value="Very Low">Very Low</option>
+            </select>
             <input type="submit" value="Submit">
         </form>
         <div id="checkList">
