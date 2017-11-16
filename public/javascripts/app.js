@@ -17,7 +17,7 @@ function taskFetcher($http) {
     }
 }
 
-function mainCtrl($scope, taskFetcher, $http, $filter, filterFilter) {
+function mainCtrl($scope, taskFetcher, $http, $filter) {
 
     $scope.taskList = [];
 
@@ -43,9 +43,9 @@ function mainCtrl($scope, taskFetcher, $http, $filter, filterFilter) {
         location.reload();
     }
 
-    $scope.removeTask = function () {
-        $scope.taskList = filterFilter($scope.taskList, function (task) {
-            return !task.selected;
-        });
+    $scope.removeTask = function (array, index) {
+        var newArray = array.splice(index, 1);
+        var deleteUrl = 'taskList';
+        $http.delete(deleteUrl, array[index]);
     };
 };

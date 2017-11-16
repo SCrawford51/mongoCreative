@@ -12,20 +12,20 @@
 </head>
 
 <body>
+    <h1>Enter a New Task</h1>
     <div id='app' ng-app='app' ng-controller='mainCtrl'>
-        
-        <h1>Enter a New Task</h1>
+
         <form id="newTask" ng-submit="addTask()">
             <input type="text" ng-model="Task" value="">
             <input type="submit" value="Submit">
         </form>
-
-        <ul>
-            <li ng-repeat='list in taskList' class="items">
-                <input type="checkbox" ng-model="list.check">{{list.task}}
-            </li>
-        </ul>
-        <button ng-click="removeTask()">Delete</button>
+        <div id="checkList">
+            <ul>
+                <li ng-repeat='list in taskList' class="items">
+                    <input type="checkbox" ng-model="list.check" ng-click="removeTask(taskList, $index)">{{list.task}}
+                </li>
+            </ul>
+        </div>
 
     </div>
 </body>
