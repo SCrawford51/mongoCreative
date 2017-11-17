@@ -8,13 +8,13 @@ function mainCtrl($scope, $http, $filter) {
 
     $scope.getAll = function () {
         return $http.get('/taskList').success(function (data) {
-            angular.copy(data, $scope.comments);
+            angular.copy(data, $scope.taskList);
         });
     };
     $scope.getAll();
 
     $scope.create = function (task) {
-        return $http.post('/taskList', comment).success(function (data) {
+        return $http.post('/taskList', task).success(function (data) {
             $scope.taskList.push(data);
         });
     };
@@ -27,13 +27,16 @@ function mainCtrl($scope, $http, $filter) {
             priority: $scope.Priority,
         });
         $scope.Task = '';
+        $scope.Priority = '';
     }
 
-    $scope.removeTask = function (array, index) {
-        $http.delete('/taskList/' + comment._id)
+    $scope.removeTask = function (task) {
+        console.log("In RemoveTask");
+        $http.delete('/taskList/' + task._id)
             .success(function (data) {
                 console.log("delete worked");
             });
+            console.log(task._id);
         $scope.getAll();
     };
 };

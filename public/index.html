@@ -28,8 +28,8 @@
         </form>
         <div id="checkList">
             <ul>
-                <li ng-repeat="list in taskList" class="items">
-                    <input type="checkbox" ng-model="list.check" ng-click="removeTask(taskList, $index)">{{list.task}}
+                <li ng-repeat="list in taskList | orderBy: '-priority'" class="items">
+                    <input type="checkbox" ng-model="list.check" ng-click="removeTask(list)">{{list.task}}
                 </li>
             </ul>
         </div>

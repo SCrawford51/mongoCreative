@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var mongoose = require('mongoose'); //Adds mongoose as a usable dependency
+var mongoose = require('mongoose');
 var Task = mongoose.model('Task');
 
 router.get('/taskList', function (req, res, next) {
@@ -19,8 +19,10 @@ router.post('/taskList', function (req, res, next) {
     });
 });
 
-router.param('taskList', function (req, res, next, id) {
+router.param('task', function (req, res, next, id) {
+    console.log("In param function");
     var query = Task.findById(id);
+    console.log("query: ", query);
     query.exec(function (err, task) {
         if (err) { return next(err); }
         if (!task) { return next(new Error("can't find task")); }
@@ -30,12 +32,14 @@ router.param('taskList', function (req, res, next, id) {
 });
 
 router.get('/taskList/:task', function (req, res) {
+    console.log("In get: ", req.task);
     res.json(req.task);
 });
 
 router.delete('/taskList/:task', function (req, res) {
     console.log("In Delete");
-    req.comment.remove();
+    console.log(req.task);
+    req.task.remove();
     res.sendStatus(200);
 });
 
